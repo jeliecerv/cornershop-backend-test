@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "django_extensions",
     "backend_test.utils",
+    ###
+    "meal_delivery",
 ]
 
 MIDDLEWARE = [
@@ -235,3 +237,5 @@ LOGGING = {
         },
     },
 }
+
+AUTH_USER_MODEL = "meal_delivery.User"
