@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Welcome to meal delivery for Cornershop employees! <span class="icon-emo-happy"></span></h2>
+<p class="lead">
+  If you already have an account, go ahead and <a href="{% url 'login' %}">log in</a>. If you are new employee,
+  get started
+  by creating a <a href="{% url 'employee_signup' %}">employee account</a> or a <a href="{% url 'admin_signup' %}">admin
+    account</a>.
+</p>
+{% endblock %}

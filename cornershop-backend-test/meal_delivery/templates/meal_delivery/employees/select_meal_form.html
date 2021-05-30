@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h2>Menu</h2>
+<h3 class="mb-3">{{ menu.name }}</h3>
+<p class="lead">{{ menu.additional_text }}</p>
+<form method="post" novalidate class="{% if not is_editable %}disable{% endif %}">
+  {% csrf_token %}
+  {% for item in menu.items.all %}
+  <div class="form-check">
+    <input type="radio" class="form-check-input" name="menu_item" value="{{ item.pk }}"
+      {% if meal.menu_item.pk == item.pk %}checked{% endif %} />
+    <label class="form-check-label"><strong>Option {{ item.order }}:</strong>
+      {{ item.description }} - {% if item.salad %}Salad{% endif %} - {% if item.dessert %}Dessert{% endif %}</label>
+  </div>
+  {% empty %}
+  <p>meals matching.</p>
+  {% endfor %}
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text">Preferences</span>
+    </div>
+    <textarea maxlength="128" class="form-control" aria-label="With textarea"
+      name="preference">{{ meal.preference }}</textarea>
+  </div>
+  <input type="hidden" name="meal_pk" value="{{ meal.pk }}">
+
+  <button type="submit" class="btn btn-primary">Save</button>
+  <a href="{% url 'employees:meal_history_list' %}" class="btn btn-outline-secondary" role="button">Nevermind</a>
+</form>
+{% endblock %}
+
+{% block script_js %}
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('form.disable :input').attr("disabled", true);
+    $('form.disable :textarea').attr("disabled", true);
+  });
+</script>
+{% endblock %}

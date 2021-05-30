@@ -6,9 +6,11 @@ from django.db import models
 
 
 class User(AbstractUser):
+    ADMIN = 1
+    EMPLOYEE = 2
     USER_TYPE_CHOICES = (
-        (1, "admin"),
-        (2, "employee"),
+        (ADMIN, "admin"),
+        (EMPLOYEE, "employee"),
     )
 
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES)
@@ -32,7 +34,7 @@ class Menu(models.Model):
     additional_text = models.CharField(max_length=128, null=True, blank=True)
 
     class Meta:
-        ordering = ["date"]
+        ordering = ["-date"]
         verbose_name_plural = "menus"
 
     def __unicode__(self):
@@ -67,7 +69,7 @@ class Meal(models.Model):
     preference = models.CharField(max_length=128)
 
     class Meta:
-        ordering = ["date_choose"]
+        ordering = ["-date_choose"]
         verbose_name_plural = "meals"
 
     def __unicode__(self):

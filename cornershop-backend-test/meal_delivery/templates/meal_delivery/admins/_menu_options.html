@@ -1,0 +1,8 @@
+{% load crispy_forms_tags %}
+
+<h3>Menu options</h3>
+<div id="originalOptions">
+    {{ menu_items_form|crispy }}
+</div>
+<div id="appendOptions"></div>
+<button id="addOption" type="button" class="btn btn-primary">Add option</button>

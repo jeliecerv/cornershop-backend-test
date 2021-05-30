@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Menus</li>
+  </ol>
+</nav>
+<h2 class="mb-3">Menus</h2>
+<a href="{% url 'admins:menu_add' %}" class="btn btn-primary mb-3" role="button">Add menu</a>
+<div class="card">
+  <table class="table mb-0">
+    <thead>
+      <tr>
+        <th>Menu</th>
+        <th>Date</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for menu in menus %}
+      <tr>
+        <td class="align-middle"><a href="{% url 'admins:menu_change' menu.pk %}">{{ menu.name }}</a></td>
+        <td class="align-middle">{{ menu.date }}</td>
+        <td class="align-middle">{{ menu.additional_text }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td class="bg-light text-center font-italic" colspan="5">You haven't created any menu yet.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'admins:menu_list' %}">Menus</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Add a new menu</li>
+  </ol>
+</nav>
+<h2 class="mb-3">Add a new quiz</h2>
+<div class="row">
+  <div class="col-md-6 col-sm-8 col-12">
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {{ form|crispy }}
+      <hr />
+      {% include 'meal_delivery/admins/_menu_options.html' %}
+      <button type="submit" class="btn btn-success">Save</button>
+      <a href="{% url 'admins:menu_list' %}" class="btn btn-outline-secondary" role="button">Nevermind</a>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block script_js %}
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('.dateinput').datepicker({ format: "yyyy-mm-dd" });
+
+    var numItem = $("#id_items-INITIAL_FORMS").val();
+    $("#originalOptions > .multiField:last").find("#id_items-" + numItem + "-order").val(numItem)
+    $('#addOption').click(function () {
+      var clone_element = $("#originalOptions > .multiField:last").clone()
+      clone_element.appendTo("#appendOptions");
+
+      var totalItems = parseInt($("#id_items-TOTAL_FORMS").val()) + 1;
+      $("#id_items-TOTAL_FORMS").val(totalItems);
+
+      clone_element.find('input').each(function () {
+        var $t = $(this);
+        $t.attr({
+          name: $t.attr('name').replace(numItem, totalItems - 1)
+        });
+      });
+      clone_element.find("#id_items-" + numItem + "-order").val(totalItems - 1)
+    });
+  });
+</script>
+{% endblock %}

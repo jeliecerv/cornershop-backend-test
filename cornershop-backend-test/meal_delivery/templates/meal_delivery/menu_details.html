@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h2>Menu</h2>
+<h3 class="mb-3">{{ menu.name }}</h3>
+<p class="lead">{{ menu.additional_text }}</p>
+{% for item in menu.items.all %}
+<div class="form-check">
+  <label class="form-check-label"><strong>Option {{ item.order }}:</strong>
+    {{ item.description }} - {% if item.salad %}Salad{% endif %} - {% if item.dessert %}Dessert{% endif %}</label>
+</div>
+{% empty %}
+<p>meals matching.</p>
+{% endfor %}
+{% endblock %}

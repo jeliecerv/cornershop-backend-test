@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if today_menu %}
+{% include 'meal_delivery/employees/_today_menu.html' %}
+{% endif %}
+<hr>
+<h2 class="mb-3">History meals</h2>
+<div class="card">
+  <table class="table mb-0">
+    <thead>
+      <tr>
+        <th>Menu</th>
+        <th>Date</th>
+        <th>Preference</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for meal in meals %}
+      <tr>
+        <td class="align-middle"><a
+            href="{% url 'employees:select_meal' meal.menu_item.menu.pk %}">{{ meal.menu_item.description }}</a>
+        </td>
+        <td class="align-middle">{{ meal.date_choose }}</td>
+        <td class="align-middle">{{ meal.preference }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td class="bg-light text-center font-italic" colspan="4">No meal matching.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
