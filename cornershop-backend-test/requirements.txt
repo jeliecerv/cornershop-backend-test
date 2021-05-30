@@ -54,3 +54,5 @@ wcwidth==0.2.5
 wrapt==1.12.1
 python-dotenv==0.17.1
 django-crispy-forms==1.11.2
+isort==5.0.5
+slackclient==2.9.2

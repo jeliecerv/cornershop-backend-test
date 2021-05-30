@@ -1,8 +1,15 @@
 import datetime
+import logging
 import uuid
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+
+from slack.errors import SlackApiError
+
+from backend_test.envtools import getenv
+
+logger = logging.getLogger(__name__)
 
 
 class User(AbstractUser):
@@ -32,6 +39,30 @@ class Menu(models.Model):
     name = models.CharField(max_length=24, unique=True, verbose_name="menu name")
     date = models.DateField(default=datetime.date.today)
     additional_text = models.CharField(max_length=128, null=True, blank=True)
+
+    def send_menu_slack(self, client):
+        message = """
+            Hello!
+            I share with you today's menu [{date_menu}] :)
+
+            {options}
+
+            Have a nice day!
+        """
+        options = []
+        for item in self.items.all():
+            option_text = f"Option {item.order + 1}: {item.description}{', salad' if item.salad else ''}{', dessert' if item.dessert else ''}"
+            options.append(option_text)
+        try:
+            message = message.format(date_menu=self.date, options="\n".join(options))
+            response = client.chat_postMessage(
+                channel=getenv("SLACK_CHANNEL"), text=message
+            )
+            logger.info(response["message"]["text"])
+        except SlackApiError as e:
+            logger.error(f"Got an error: {e.response['error']}")
+        except Exception as e:
+            logger.error(f"Got an error: {e}")
 
     class Meta:
         ordering = ["-date"]

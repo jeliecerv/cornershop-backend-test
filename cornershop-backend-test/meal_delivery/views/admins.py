@@ -18,6 +18,7 @@ from django.views.generic import (
 from ..decorators import admin_required
 from ..forms import AdminSignUpForm, MenuItemFormset
 from ..models import Menu, User
+from ..tasks import send_menu_task
 
 
 class AdminSignUpView(CreateView):
@@ -42,18 +43,10 @@ class MenuListView(ListView):
     template_name = "meal_delivery/admins/menu_list.html"
 
 
-@method_decorator([login_required, admin_required], name="dispatch")
-class MenuCreateView(CreateView):
+class BaseMenuView(object):
     model = Menu
     fields = ("name", "date", "additional_text")
     template_name = "meal_delivery/admins/menu_add_update_form.html"
-
-    def get_context_data(self, **kwargs):
-        if self.request.POST:
-            kwargs["menu_items_form"] = MenuItemFormset(self.request.POST)
-        else:
-            kwargs["menu_items_form"] = MenuItemFormset()
-        return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
         menu = form.save(commit=False)
@@ -67,16 +60,24 @@ class MenuCreateView(CreateView):
 
         messages.success(
             self.request,
-            "The menu was created with success!",
+            "The menu was created/updated with success!",
         )
-        return redirect("admins:menu_change", menu.pk)
+        send_menu_task.delay(menu.pk)
+        return redirect("admins:menu_list")
 
 
-class MenuUpdateView(UpdateView):
-    model = Menu
-    fields = ("name", "date", "additional_text")
-    template_name = "meal_delivery/admins/menu_add_update_form.html"
+@method_decorator([login_required, admin_required], name="dispatch")
+class MenuCreateView(BaseMenuView, CreateView):
+    def get_context_data(self, **kwargs):
+        if self.request.POST:
+            kwargs["menu_items_form"] = MenuItemFormset(self.request.POST)
+        else:
+            kwargs["menu_items_form"] = MenuItemFormset()
+        return super().get_context_data(**kwargs)
 
+
+@method_decorator([login_required, admin_required], name="dispatch")
+class MenuUpdateView(BaseMenuView, UpdateView):
     def get_context_data(self, **kwargs):
         if self.request.POST:
             kwargs["menu_items_form"] = MenuItemFormset(
@@ -85,19 +86,3 @@ class MenuUpdateView(UpdateView):
         else:
             kwargs["menu_items_form"] = MenuItemFormset(instance=self.object)
         return super().get_context_data(**kwargs)
-
-    def form_valid(self, form):
-        menu = form.save(commit=False)
-        menu.save()
-
-        context = self.get_context_data()
-        menu_items_form = context["menu_items_form"]
-        if menu_items_form.is_valid():
-            menu_items_form.instance = menu
-            menu_items_form.save()
-
-        messages.success(
-            self.request,
-            "The menu was updated with success!",
-        )
-        return redirect("admins:menu_list")
