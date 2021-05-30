@@ -44,6 +44,8 @@ class MenuListView(ListView):
 
 
 class BaseMenuView(object):
+    """Base view to update and create menus"""
+
     model = Menu
     fields = ("name", "date", "additional_text")
     template_name = "meal_delivery/admins/menu_add_update_form.html"

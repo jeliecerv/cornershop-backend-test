@@ -9,6 +9,14 @@ class SignUpView(TemplateView):
 
 
 def home(request):
+    """Application entry point
+
+    Args:
+        request (request): data sent when invoking
+
+    Returns:
+        render|redirect: redirects to the corresponding page according to the type of user
+    """
     if request.user.is_authenticated:
         if request.user.user_type == request.user.ADMIN:
             return redirect("admins:menu_list")

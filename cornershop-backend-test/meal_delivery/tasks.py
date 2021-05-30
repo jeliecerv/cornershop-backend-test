@@ -15,6 +15,11 @@ client = WebClient(token=getenv("SLACK_TOKEN"))
 
 @task(name="send_menu_task")
 def send_menu_task(menu_pk):
+    """Celery task that executes sending the message to slack
+
+    Args:
+        menu_pk (string): identifier of the menu to be sent
+    """
     logger.info(f"Start send menu to slack {menu_pk}")
     menu = Menu.objects.get(pk=menu_pk)
     menu.send_menu_slack(client)

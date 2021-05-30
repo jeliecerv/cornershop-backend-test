@@ -41,6 +41,11 @@ class Menu(models.Model):
     additional_text = models.CharField(max_length=128, null=True, blank=True)
 
     def send_menu_slack(self, client):
+        """method used to send daily menu notifications to slack
+
+        Args:
+            client (WebClient): Client for connection with the slack API
+        """
         message = """
             Hello!
             I share with you today's menu [{date_menu}] :)
