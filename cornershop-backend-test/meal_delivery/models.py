@@ -47,6 +47,8 @@ class Menu(models.Model):
 
             {options}
 
+            For more info: {url}
+
             Have a nice day!
         """
         options = []
@@ -54,7 +56,11 @@ class Menu(models.Model):
             option_text = f"Option {item.order + 1}: {item.description}{', salad' if item.salad else ''}{', dessert' if item.dessert else ''}"
             options.append(option_text)
         try:
-            message = message.format(date_menu=self.date, options="\n".join(options))
+            message = message.format(
+                date_menu=self.date,
+                options="\n".join(options),
+                url=f"{getenv('MENU_URL')}/menu/{self.pk}/",
+            )
             response = client.chat_postMessage(
                 channel=getenv("SLACK_CHANNEL"), text=message
             )
