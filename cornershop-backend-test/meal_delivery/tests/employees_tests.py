@@ -57,7 +57,7 @@ def test_select_meal_view(auto_login_user_employee, menu_item_factory):
 
 
 @pytest.mark.django_db
-def test_select_meal_post_view(auto_login_user_employee, menu_item_factory):
+def test_select_meal_post_wrong_date_view(auto_login_user_employee, menu_item_factory):
     client, user = auto_login_user_employee()
     menu_item_1 = menu_item_factory()
     menu_item_2 = menu_item_factory(menu=menu_item_1.menu)
@@ -70,5 +70,7 @@ def test_select_meal_post_view(auto_login_user_employee, menu_item_factory):
     }
     response = client.post(url, data)
     assert response.status_code == 302
-    assert response.url == reverse("employees:meal_history_list")
-    assert Meal.objects.filter(employee=user).count() == 1
+    assert response.url == reverse(
+        "employees:select_meal", kwargs={"pk": menu_item_1.menu.pk}
+    )
+    assert Meal.objects.filter(employee=user).count() == 0

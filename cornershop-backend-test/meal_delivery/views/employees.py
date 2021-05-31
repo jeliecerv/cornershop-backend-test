@@ -12,6 +12,7 @@ from ..decorators import employee_required
 from ..forms import EmployeeSignUpForm
 from ..models import Employee, User, Meal, Menu, MenuItem
 import datetime
+from django.urls.base import reverse
 
 
 class EmployeeSignUpView(CreateView):
@@ -65,7 +66,18 @@ class SelectMealView(DetailView):
         return super().get_context_data(**kwargs)
 
     def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
         data = request.POST
+
+        now = datetime.datetime.now()
+        if datetime.date.today() != self.object.date and now.hour > 11:
+            messages.error(
+                request,
+                "It is not allowed to select a menu other than the one of the day!",
+            )
+            return redirect(
+                reverse("employees:select_meal", kwargs={"pk": self.object.pk})
+            )
 
         if data.get("meal_pk"):
             meal = Meal.objects.get(pk=data.get("meal_pk"))
@@ -78,7 +90,7 @@ class SelectMealView(DetailView):
         meal.save()
 
         messages.success(
-            self.request,
+            request,
             "The menu was selected with success!",
         )
         return redirect("employees:meal_history_list")
