@@ -56,3 +56,7 @@ python-dotenv==0.17.1
 django-crispy-forms==1.11.2
 isort==5.0.5
 slackclient==2.9.2
+pytest-env==0.6.2
+pytest-dotenv==0.5.2
+pytest-factoryboy==2.1.0
+pytest-mock==3.6.1

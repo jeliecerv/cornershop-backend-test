@@ -61,6 +61,10 @@ slackclient = "*"
 django-crispy-forms = "*"
 
 [dev-packages]
+pytest-env = "*"
+pytest-dotenv = "*"
+pytest-factoryboy = "*"
+pytest-mock = "*"
 
 [requires]
 python_version = "3.8"

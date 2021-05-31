@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from django.views.generic import TemplateView, DetailView
+from django.http import Http404
 
 from ..models import Menu
 
@@ -17,6 +18,8 @@ def home(request):
     Returns:
         render|redirect: redirects to the corresponding page according to the type of user
     """
+    if request.method == "POST":
+        raise Http404("Page does not exist")
     if request.user.is_authenticated:
         if request.user.user_type == request.user.ADMIN:
             return redirect("admins:menu_list")

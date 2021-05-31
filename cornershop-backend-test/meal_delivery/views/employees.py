@@ -67,8 +67,8 @@ class SelectMealView(DetailView):
     def post(self, request, *args, **kwargs):
         data = request.POST
 
-        if data["meal_pk"]:
-            meal = Meal.objects.get(pk=data["meal_pk"])
+        if data.get("meal_pk"):
+            meal = Meal.objects.get(pk=data.get("meal_pk"))
         else:
             meal = Meal()
 
