@@ -13,6 +13,7 @@ from ..forms import EmployeeSignUpForm
 from ..models import Employee, User, Meal, Menu, MenuItem
 import datetime
 from django.urls.base import reverse
+from backend_test.envtools import getenv
 
 
 class EmployeeSignUpView(CreateView):
@@ -60,8 +61,10 @@ class SelectMealView(DetailView):
         ).first()
         now = datetime.datetime.now()
         kwargs["meal"] = meal
-        kwargs["is_editable"] = (
-            datetime.date.today() == self.object.date and now.hour < 11
+        kwargs[
+            "is_editable"
+        ] = datetime.date.today() == self.object.date and now.hour < int(
+            getenv("HOUR_LIMIT_SELECT_MEAL", default=11)
         )
         return super().get_context_data(**kwargs)
 
@@ -70,7 +73,9 @@ class SelectMealView(DetailView):
         data = request.POST
 
         now = datetime.datetime.now()
-        if datetime.date.today() != self.object.date and now.hour > 11:
+        if datetime.date.today() != self.object.date and now.hour > int(
+            getenv("HOUR_LIMIT_SELECT_MEAL", default=11)
+        ):
             messages.error(
                 request,
                 "It is not allowed to select a menu other than the one of the day!",

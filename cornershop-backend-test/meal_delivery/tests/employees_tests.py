@@ -5,6 +5,7 @@ from django.urls import reverse
 from meal_delivery.tests.fixtures import *
 
 from ..models import User, Employee, Meal
+import datetime
 
 
 @pytest.mark.django_db
@@ -74,3 +75,28 @@ def test_select_meal_post_wrong_date_view(auto_login_user_employee, menu_item_fa
         "employees:select_meal", kwargs={"pk": menu_item_1.menu.pk}
     )
     assert Meal.objects.filter(employee=user).count() == 0
+
+
+@pytest.mark.django_db
+def test_select_meal_post_right_date_view(
+    monkeypatch,
+    auto_login_user_employee,
+    menu_factory,
+    menu_item_factory,
+):
+    client, user = auto_login_user_employee()
+    menu = menu_factory(date=datetime.date.today())
+    menu_item_1 = menu_item_factory(menu=menu)
+    menu_item_2 = menu_item_factory(menu=menu)
+    menu_item_3 = menu_item_factory(menu=menu)
+    url = reverse("employees:select_meal", kwargs={"pk": menu.pk})
+    fake = faker.Faker()
+    data = {
+        "menu_item": menu_item_2.pk,
+        "preference": fake.text(max_nb_chars=50),
+    }
+    monkeypatch.setenv("HOUR_LIMIT_SELECT_MEAL", "24")
+    response = client.post(url, data)
+    assert response.status_code == 302
+    assert response.url == reverse("employees:meal_history_list")
+    assert Meal.objects.filter(employee=user).count() == 1
