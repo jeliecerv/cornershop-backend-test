@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group
 import factory
 import factory.fuzzy
 
-from ..models import User, Employee, Menu, MenuItem
+from ..models import Employee, Menu, MenuItem, User
 
 
 class UserAdminFactory(factory.django.DjangoModelFactory):

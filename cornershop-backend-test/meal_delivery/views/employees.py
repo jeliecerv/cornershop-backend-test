@@ -1,19 +1,18 @@
+import datetime
+
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from django.db import transaction
-from django.db.models import Count
-from django.shortcuts import get_object_or_404, redirect, render
-from django.urls import reverse_lazy
+from django.shortcuts import redirect
+from django.urls.base import reverse
 from django.utils.decorators import method_decorator
-from django.views.generic import CreateView, ListView, UpdateView, DetailView
+from django.views.generic import CreateView, DetailView, ListView
+
+from backend_test.envtools import getenv
 
 from ..decorators import employee_required
 from ..forms import EmployeeSignUpForm
-from ..models import Employee, User, Meal, Menu, MenuItem
-import datetime
-from django.urls.base import reverse
-from backend_test.envtools import getenv
+from ..models import Employee, Meal, Menu, MenuItem, User
 
 
 class EmployeeSignUpView(CreateView):

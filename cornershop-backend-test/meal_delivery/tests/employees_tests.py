@@ -1,11 +1,13 @@
+import datetime
+
 import pytest
-from factory.faker import faker
 from django.urls import reverse
+
+from factory.faker import faker
 
 from meal_delivery.tests.fixtures import *
 
-from ..models import User, Employee, Meal
-import datetime
+from ..models import Employee, Meal, User
 
 
 @pytest.mark.django_db
