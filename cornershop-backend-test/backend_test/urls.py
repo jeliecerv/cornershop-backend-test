@@ -14,9 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import include, path
-
+from rest_framework import routers
 from .utils.healthz import healthz
 from meal_delivery.views import meal_delivery, employees, admins
+from api import views
+
+router = routers.DefaultRouter()
+router.register(r"admin-menu", views.AdminMenuViewSet)
+router.register(r"today-menu", views.TodayMenuViewSet)
+router.register(r"choose-today-menu-meal", views.ChooseTodayMenuMealViewSet)
 
 urlpatterns = [
     path("", include("meal_delivery.urls")),
@@ -33,4 +39,5 @@ urlpatterns = [
         admins.AdminSignUpView.as_view(),
         name="admin_signup",
     ),
+    path("api/", include(router.urls)),
 ]
