@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     ###
     "crispy_forms",
     "meal_delivery",
+    "api",
 ]
 
 MIDDLEWARE = [

@@ -5,7 +5,12 @@ from rest_framework import exceptions
 
 class CustomUserAdminAuthentication(authentication.BasicAuthentication):
     def authenticate(self, request):
-        user, _ = super().authenticate(request)
+        try:
+            user, _ = super().authenticate(request)
+        except exceptions.AuthenticationFailed as e:
+            raise e
+        except Exception as e:
+            raise exceptions.AuthenticationFailed("User is not an admin.")
         if user.user_type != User.ADMIN:
             raise exceptions.AuthenticationFailed("User is not an admin.")
         return user, _
@@ -13,7 +18,12 @@ class CustomUserAdminAuthentication(authentication.BasicAuthentication):
 
 class CustomUserEmployeeAuthentication(authentication.BasicAuthentication):
     def authenticate(self, request):
-        user, _ = super().authenticate(request)
+        try:
+            user, _ = super().authenticate(request)
+        except exceptions.AuthenticationFailed as e:
+            raise e
+        except Exception as e:
+            raise exceptions.AuthenticationFailed("User is not an employee.")
         if user.user_type != User.EMPLOYEE:
             raise exceptions.AuthenticationFailed("User is not an employee.")
         return user, _
