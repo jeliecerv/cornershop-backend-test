@@ -1,0 +1,387 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "Corner",
+    "contact": {}
+  },
+  "host": "127.0.0.1:8000",
+  "basePath": "/api",
+  "securityDefinitions": {
+    "auth": {
+      "type": "basic"
+    }
+  },
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/admin-menu": {
+      "get": {
+        "summary": "Get Menu List",
+        "tags": [
+          "Misc"
+        ],
+        "operationId": "GetMenuList",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      },
+      "post": {
+        "summary": "Create Menu",
+        "tags": [
+          "Misc"
+        ],
+        "operationId": "CreateMenu",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CreateMenuRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/admin-menu/e85634e9-51a9-405f-b619-67ec5cd47bc0": {
+      "get": {
+        "summary": "Get Menu only",
+        "tags": [
+          "Misc"
+        ],
+        "operationId": "GetMenuonly",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      },
+      "put": {
+        "summary": "Update Menu",
+        "tags": [
+          "Misc"
+        ],
+        "operationId": "UpdateMenu",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UpdateMenuRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/today-menu": {
+      "get": {
+        "summary": "Today's Menu",
+        "tags": [
+          "Misc"
+        ],
+        "operationId": "Today'sMenu",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/choose-today-menu-meal": {
+      "post": {
+        "summary": "Choose meal",
+        "tags": [
+          "Misc"
+        ],
+        "operationId": "Choosemeal",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ChoosemealRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "CreateMenuRequest": {
+      "title": "CreateMenuRequest",
+      "example": {
+        "name": "Menu today 06-01",
+        "date": "2021-06-01",
+        "additional_text": "test api meu",
+        "items": [
+          {
+            "description": "meal 1 api",
+            "salad": true,
+            "dessert": true,
+            "order": 0
+          },
+          {
+            "description": "meal 2 api",
+            "salad": true,
+            "dessert": false,
+            "order": 1
+          },
+          {
+            "description": "mela 3 api",
+            "salad": true,
+            "dessert": true,
+            "order": 2
+          }
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "additional_text": {
+          "type": "string"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Item"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "date",
+        "additional_text",
+        "items"
+      ]
+    },
+    "Item": {
+      "title": "Item",
+      "example": {
+        "description": "meal 1 api",
+        "salad": true,
+        "dessert": true,
+        "order": 0
+      },
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "salad": {
+          "type": "boolean"
+        },
+        "dessert": {
+          "type": "boolean"
+        },
+        "order": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "description",
+        "salad",
+        "dessert",
+        "order"
+      ]
+    },
+    "UpdateMenuRequest": {
+      "title": "UpdateMenuRequest",
+      "example": {
+        "name": "Menu today 06-01 update",
+        "date": "2021-06-01",
+        "additional_text": "test api meu",
+        "items": [
+          {
+            "id": 9,
+            "description": "meal 1 api u",
+            "salad": true,
+            "dessert": true,
+            "order": 0
+          },
+          {
+            "id": 10,
+            "description": "meal 2 api",
+            "salad": true,
+            "dessert": false,
+            "order": 1
+          },
+          {
+            "id": 11,
+            "description": "mela 3 api",
+            "salad": true,
+            "dessert": true,
+            "order": 2
+          },
+          {
+            "description": "mela 4 api u",
+            "salad": true,
+            "dessert": true,
+            "order": 3
+          }
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "additional_text": {
+          "type": "string"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Item1"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "date",
+        "additional_text",
+        "items"
+      ]
+    },
+    "Item1": {
+      "title": "Item1",
+      "example": {
+        "id": 9,
+        "description": "meal 1 api u",
+        "salad": true,
+        "dessert": true,
+        "order": 0
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "description": {
+          "type": "string"
+        },
+        "salad": {
+          "type": "boolean"
+        },
+        "dessert": {
+          "type": "boolean"
+        },
+        "order": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "description",
+        "salad",
+        "dessert",
+        "order"
+      ]
+    },
+    "ChoosemealRequest": {
+      "title": "ChoosemealRequest",
+      "example": {
+        "menu_item_id": 8,
+        "preference": "Lorem ipsu"
+      },
+      "type": "object",
+      "properties": {
+        "menu_item_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "preference": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "menu_item_id",
+        "preference"
+      ]
+    }
+  },
+  "security": [
+    {
+      "auth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Misc",
+      "description": ""
+    }
+  ]
+}

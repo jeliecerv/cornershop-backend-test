@@ -1,0 +1,260 @@
+{
+	"info": {
+		"_postman_id": "f5c5adb3-08a9-4fd9-aac6-4b9663d00315",
+		"name": "Corner",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Menu List",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "admintest",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "Corner123456",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/admin-menu/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"admin-menu",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Menu only",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "admintest",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "Corner123456",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/admin-menu/e85634e9-51a9-405f-b619-67ec5cd47bc0/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"admin-menu",
+						"e85634e9-51a9-405f-b619-67ec5cd47bc0",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Menu",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "admintest",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "Corner123456",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Menu today 06-01\",\n    \"date\": \"2021-06-01\",\n    \"additional_text\": \"test api meu\",\n    \"items\": [\n        {\n            \"description\": \"meal 1 api\",\n            \"salad\": true,\n            \"dessert\": true,\n            \"order\": 0\n        },\n        {\n            \"description\": \"meal 2 api\",\n            \"salad\": true,\n            \"dessert\": false,\n            \"order\": 1\n        },\n        {\n            \"description\": \"mela 3 api\",\n            \"salad\": true,\n            \"dessert\": true,\n            \"order\": 2\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/admin-menu/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"admin-menu",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Menu",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "admintest",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "Corner123456",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Menu today 06-01 update\",\n    \"date\": \"2021-06-01\",\n    \"additional_text\": \"test api meu\",\n    \"items\": [\n        {\n            \"id\": 9,\n            \"description\": \"meal 1 api u\",\n            \"salad\": true,\n            \"dessert\": true,\n            \"order\": 0\n        },\n        {\n            \"id\": 10,\n            \"description\": \"meal 2 api\",\n            \"salad\": true,\n            \"dessert\": false,\n            \"order\": 1\n        },\n        {\n            \"id\": 11,\n            \"description\": \"mela 3 api\",\n            \"salad\": true,\n            \"dessert\": true,\n            \"order\": 2\n        },\n        {\n            \"description\": \"mela 4 api u\",\n            \"salad\": true,\n            \"dessert\": true,\n            \"order\": 3\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/admin-menu/e85634e9-51a9-405f-b619-67ec5cd47bc0/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"admin-menu",
+						"e85634e9-51a9-405f-b619-67ec5cd47bc0",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Today's Menu",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/today-menu/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"today-menu",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Choose meal",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "employeetest",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "Corner123456",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"menu_item_id\": 8,\n    \"preference\": \"Lorem ipsu\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/choose-today-menu-meal/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"choose-today-menu-meal",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
