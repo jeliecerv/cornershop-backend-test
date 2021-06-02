@@ -39,7 +39,7 @@ class MealHistoryListView(ListView):
     def get_context_data(self, **kwargs):
         today_menu = Menu.objects.filter(date=datetime.date.today()).first()
         now = datetime.datetime.now()
-        if now.hour < 11:
+        if now.hour < getenv("HOUR_LIMIT_SELECT_MEAL", default=11):
             kwargs["today_menu"] = today_menu
         return super().get_context_data(**kwargs)
 
